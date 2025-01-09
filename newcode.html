@@ -46,6 +46,15 @@
             text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
         }
 
+        /* Mobile Menu Button */
+        .menu-toggle {
+            display: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
         nav ul {
             display: flex;
             gap: 3rem;
@@ -65,6 +74,38 @@
             color: #e67e22;
         }
 
+        /* Mobile Navigation */
+        @media screen and (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+
+            nav ul {
+                position: fixed;
+                top: 0;
+                left: -100%;
+                height: 100vh;
+                width: 80%;
+                background: #1a1a1a;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                transition: 0.3s ease-in-out;
+                gap: 2rem;
+            }
+
+            nav ul.active {
+                left: 0;
+            }
+
+            .logo {
+                font-size: 1.5rem;
+            }
+
+            header {
+                padding: 1rem;
+            }
+        }
         /* Hero Section */
         .hero-section {
             height: 100vh;
@@ -182,6 +223,55 @@
             max-width: 600px;
             margin: 0 auto;
         }
+
+        /* Mobile Responsive Styles */
+        @media screen and (max-width: 768px) {
+            .hero-content h1 {
+                font-size: 2.5rem;
+                margin-bottom: 1rem;
+            }
+
+            .hero-content p {
+                font-size: 1rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 0 2rem;
+            }
+
+            .cta-btn {
+                width: 100%;
+                text-align: center;
+                padding: 0.8rem 1.5rem;
+            }
+
+            .section-title h2 {
+                font-size: 2rem;
+            }
+
+            .section-title p {
+                padding: 0 1rem;
+            }
+
+            /* Disable parallax on mobile */
+            .hero-section {
+                background-attachment: scroll;
+            }
+        }
+
+        /* Tablet Responsive Styles */
+        @media screen and (min-width: 769px) and (max-width: 1024px) {
+            .hero-content h1 {
+                font-size: 3rem;
+            }
+
+            .section-container {
+                padding: 0 40px;
+            }
+        }
         /* About Section */
         .about-section {
             padding: 5rem 0;
@@ -288,6 +378,88 @@
             line-height: 1.6;
         }
 
+        /* Mobile Responsive Styles for About & Features */
+        @media screen and (max-width: 768px) {
+            .about-section,
+            .features-section {
+                padding: 3rem 0;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+                padding: 0 1rem;
+            }
+
+            .about-image {
+                order: -1; /* Move image above text on mobile */
+            }
+
+            .about-text h3 {
+                font-size: 1.5rem;
+                text-align: center;
+            }
+
+            .about-text p {
+                text-align: center;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+                padding: 0 1rem;
+            }
+
+            .feature-card {
+                padding: 2rem 1.5rem;
+            }
+
+            .feature-icon {
+                width: 60px;
+                height: 60px;
+            }
+
+            .feature-icon i {
+                font-size: 1.5rem;
+            }
+
+            /* Touch-friendly improvements */
+            .feature-card {
+                cursor: pointer;
+                -webkit-tap-highlight-color: transparent;
+            }
+
+            .feature-card:active {
+                transform: scale(0.98);
+            }
+        }
+
+        /* Tablet Responsive Styles */
+        @media screen and (min-width: 769px) and (max-width: 1024px) {
+            .about-content {
+                gap: 2rem;
+            }
+
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .about-section,
+            .features-section {
+                padding: 4rem 0;
+            }
+        }
+
+        /* Animation for scroll reveal */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
         /* Gallery Section */
         .gallery-section {
             padding: 5rem 0;
@@ -298,6 +470,7 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 1.5rem;
+            padding: 0 1rem;
         }
 
         .gallery-item {
@@ -358,6 +531,7 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
+            padding: 0 1rem;
         }
 
         .testimonial-card {
@@ -417,6 +591,94 @@
         .author-info p {
             color: #666;
             font-size: 0.9rem;
+        }
+
+        /* Mobile Responsive Styles for Gallery & Testimonials */
+        @media screen and (max-width: 768px) {
+            .gallery-section,
+            .testimonials {
+                padding: 3rem 0;
+            }
+
+            .gallery-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .gallery-item {
+                height: 250px;
+            }
+
+            .testimonials-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .testimonial-card {
+                padding: 1.5rem;
+            }
+
+            /* Touch-friendly improvements */
+            .gallery-item {
+                -webkit-tap-highlight-color: transparent;
+            }
+
+            .gallery-overlay {
+                background: rgba(230, 126, 34, 0.7);
+            }
+
+            /* Show overlay slightly on mobile for better UX */
+            .gallery-item .gallery-overlay {
+                opacity: 0.2;
+            }
+
+            .gallery-item:active {
+                transform: scale(0.98);
+            }
+        }
+
+        /* Tablet Responsive Styles */
+        @media screen and (min-width: 769px) and (max-width: 1024px) {
+            .gallery-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .testimonials-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* Lightbox Styles */
+        .lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1002;
+        }
+
+        .lightbox.active {
+            display: flex;
+        }
+
+        .lightbox img {
+            max-width: 90%;
+            max-height: 90vh;
+            border-radius: 8px;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
         }
         /* Footer Styles */
         footer {
@@ -529,6 +791,42 @@
             color: #999;
         }
 
+        /* Mobile Responsive Footer */
+        @media screen and (max-width: 768px) {
+            footer {
+                padding: 3rem 0 1rem;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+                padding: 0 1.5rem;
+            }
+
+            .footer-section {
+                text-align: center;
+            }
+
+            .footer-section h3::after {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+
+            .social-links {
+                justify-content: center;
+            }
+
+            /* Larger touch targets for mobile */
+            .footer-links li {
+                padding: 0.5rem 0;
+            }
+
+            .social-links a {
+                width: 45px;
+                height: 45px;
+            }
+        }
+
         /* Animations */
         @keyframes fadeInDown {
             from {
@@ -563,111 +861,15 @@
                 transform: translateY(-15px);
             }
         }
-
-        /* Scroll Reveal Animation */
-        .reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s ease;
-        }
-
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Responsive Design */
-        @media (max-width: 1024px) {
-            .about-content {
-                gap: 2rem;
-            }
-
-            .gallery-grid {
-                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            }
-        }
-
-        @media (max-width: 768px) {
-            header {
-                background: #1a1a1a;
-                padding: 1rem;
-            }
-
-            nav ul {
-                display: none;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                width: 100%;
-                background: #1a1a1a;
-                padding: 1rem 0;
-                flex-direction: column;
-                gap: 0;
-            }
-
-            nav ul.active {
-                display: flex;
-            }
-
-            nav ul li {
-                width: 100%;
-                text-align: center;
-            }
-
-            nav ul li a {
-                display: block;
-                padding: 1rem;
-            }
-
-            .hero-content h1 {
-                font-size: 2.5rem;
-            }
-
-            .hero-content p {
-                font-size: 1rem;
-            }
-
-            .about-content {
-                grid-template-columns: 1fr;
-            }
-
-            .cta-buttons {
-                flex-direction: column;
-            }
-
-            .cta-btn {
-                width: 100%;
-                text-align: center;
-            }
-
-            .section-title h2 {
-                font-size: 2rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .hero-content h1 {
-                font-size: 2rem;
-            }
-
-            .feature-card {
-                padding: 1.5rem;
-            }
-
-            .gallery-item {
-                height: 250px;
-            }
-
-            .footer-content {
-                grid-template-columns: 1fr;
-            }
-        }
     </style>
 </head>
 <body>
     <!-- Header -->
     <header>
         <a href="newcode.html" class="logo">Gcafe</a>
+        <div class="menu-toggle" id="menuToggle">
+            <i class="fas fa-bars"></i>
+        </div>
         <nav>
             <ul>
                 <li><a href="newcode.html">Home</a></li>
@@ -683,7 +885,7 @@
     <section class="hero-section">
         <div class="hero-content">
             <h1>Welcome to Gcafe</h1>
-            <p>Experience the perfect blend of artisanal coffee and delightful cuisine in a cozy atmosphere.</p>
+            <p>Experience the perfect blend of taste and ambiance</p>
             <div class="cta-buttons">
                 <a href="menu.html" class="cta-btn primary-btn">View Menu</a>
                 <a href="reservation.html" class="cta-btn secondary-btn">Book a Table</a>
@@ -695,113 +897,128 @@
     </section>
 
     <!-- About Section -->
-    <section class="about-section reveal">
+    <section class="about-section">
         <div class="section-container">
             <div class="section-title">
                 <h2>Our Story</h2>
                 <p>Discover the passion behind every cup we serve</p>
             </div>
-            <div class="about-content">
-                <div class="about-image">
-                    <img src="https://images.unsplash.com/photo-1442512595331-e89e73853f31?ixlib=rb-4.0.3" alt="Coffee Making">
-                </div>
+            <div class="about-content reveal">
                 <div class="about-text">
-                    <h3>Crafting Perfect Moments</h3>
-                    <p>Since 2010, Gcafe has been more than just a coffee shop - it's a place where coffee culture meets culinary excellence. Our master baristas and chefs work together to create an unforgettable experience for our guests.</p>
-                    <p>We source our beans directly from sustainable farms and roast them in-house to ensure the highest quality in every cup. Our menu features both traditional favorites and innovative creations, all made with the finest ingredients.</p>
+                    <h3>A Journey of Flavors</h3>
+                    <p>Founded in 2023, Gcafe has been serving premium coffee and delectable dishes to our valued customers. Our commitment to quality and service excellence has made us a favorite destination for coffee lovers and food enthusiasts.</p>
+                    <p>We source our beans from sustainable farms and prepare each dish with the finest ingredients, ensuring an unforgettable dining experience.</p>
+                </div>
+                <div class="about-image">
+                    <img src="https://images.unsplash.com/photo-1442512595331-e89e73853f31?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80" alt="Cafe Interior">
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Features Section -->
-    <section class="features-section reveal">
+    <section class="features-section">
         <div class="section-container">
             <div class="section-title">
                 <h2>Why Choose Us</h2>
-                <p>What makes Gcafe special</p>
+                <p>Experience the difference that sets us apart</p>
             </div>
             <div class="features-grid">
-                <div class="feature-card">
+                <div class="feature-card reveal">
                     <div class="feature-icon">
                         <i class="fas fa-coffee"></i>
                     </div>
                     <h3>Premium Coffee</h3>
-                    <p>Sourced from the finest farms and roasted to perfection</p>
+                    <p>Expertly roasted beans and perfectly crafted beverages</p>
                 </div>
-                <div class="feature-card">
+                <div class="feature-card reveal">
                     <div class="feature-icon">
-                        <i class="fas fa-leaf"></i>
+                        <i class="fas fa-utensils"></i>
                     </div>
-                    <h3>Fresh Ingredients</h3>
-                    <p>Quality ingredients for the perfect taste</p>
+                    <h3>Fresh Food</h3>
+                    <p>Delicious meals prepared with quality ingredients</p>
                 </div>
-                <div class="feature-card">
+                <div class="feature-card reveal">
                     <div class="feature-icon">
-                        <i class="fas fa-users"></i>
+                        <i class="fas fa-wifi"></i>
                     </div>
-                    <h3>Expert Team</h3>
-                    <p>Passionate baristas crafting your perfect cup</p>
+                    <h3>Free WiFi</h3>
+                    <p>Stay connected while enjoying your favorite drinks</p>
+                </div>
+                <div class="feature-card reveal">
+                    <div class="feature-icon">
+                        <i class="fas fa-couch"></i>
+                    </div>
+                    <h3>Cozy Ambiance</h3>
+                    <p>Comfortable seating and relaxing atmosphere</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Gallery Section -->
-    <section class="gallery-section reveal">
+    <section class="gallery-section">
         <div class="section-container">
             <div class="section-title">
                 <h2>Our Gallery</h2>
-                <p>Moments captured at Gcafe</p>
+                <p>Take a peek at our inviting space and delicious offerings</p>
             </div>
             <div class="gallery-grid">
-                <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085" alt="Coffee">
-                    <div class="gallery-overlay">
-                        <i class="fas fa-search"></i>
-                    </div>
-                </div>
-                <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1442512595331-e89e73853f31" alt="Brewing">
-                    <div class="gallery-overlay">
-                        <i class="fas fa-search"></i>
-                    </div>
-                </div>
-                <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1498804103079-a6351b050096" alt="Coffee Art">
-                    <div class="gallery-overlay">
-                        <i class="fas fa-search"></i>
-                    </div>
-                </div>
+                <!-- Gallery items will be added dynamically via JavaScript -->
             </div>
         </div>
     </section>
 
+    <!-- Testimonials Section -->
+    <section class="testimonials">
+        <div class="section-container">
+            <div class="section-title">
+                <h2>What Our Customers Say</h2>
+                <p>Real experiences from our valued guests</p>
+            </div>
+            <div class="testimonials-grid">
+                <!-- Testimonials will be added dynamically via JavaScript -->
+            </div>
+        </div>
+    </section>
     <!-- Footer -->
     <footer>
         <div class="footer-content">
             <div class="footer-section">
-                <h3>About Us</h3>
-                <p>Gcafe is dedicated to providing the perfect coffee experience with premium beans and expert baristas.</p>
+                <h3>About Gcafe</h3>
+                <p>Experience the perfect blend of premium coffee, delicious food, and warm hospitality at Gcafe. Your home away from home.</p>
                 <div class="social-links">
                     <a href="#"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
                     <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
                 </div>
             </div>
             <div class="footer-section">
                 <h3>Quick Links</h3>
                 <ul class="footer-links">
-                    <li><a href="menu.html">Menu</a></li>
-                    <li><a href="reservation.html">Reservations</a></li>
-                    <li><a href="contact.html">Contact</a></li>
-                    <li><a href="stores.html">Our Stores</a></li>
+                    <li><a href="menu.html">Our Menu</a></li>
+                    <li><a href="stores.html">Locations</a></li>
+                    <li><a href="reservation.html">Book a Table</a></li>
+                    <li><a href="#">Gift Cards</a></li>
+                    <li><a href="#">Careers</a></li>
                 </ul>
             </div>
             <div class="footer-section">
-                <h3>Contact Info</h3>
-                <p>123 Coffee Street<br>City, State 12345</p>
-                <p>Phone: (123) 456-7890<br>Email: info@gcafe.com</p>
+                <h3>Contact Us</h3>
+                <ul class="footer-links">
+                    <li><i class="fas fa-phone"></i> +91 123 456 7890</li>
+                    <li><i class="fas fa-envelope"></i> info@gcafe.com</li>
+                    <li><i class="fas fa-map-marker-alt"></i> 123 Coffee Street, Bangalore</li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Opening Hours</h3>
+                <ul class="footer-links">
+                    <li>Monday - Friday: 7:00 AM - 10:00 PM</li>
+                    <li>Saturday: 8:00 AM - 11:00 PM</li>
+                    <li>Sunday: 8:00 AM - 9:00 PM</li>
+                </ul>
             </div>
         </div>
         <div class="footer-bottom">
@@ -809,40 +1026,155 @@
         </div>
     </footer>
 
-   <script>
-    // Header scroll effect
-    window.addEventListener('scroll', function() {
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox">
+        <span class="lightbox-close">&times;</span>
+        <img src="" alt="Gallery Image">
+    </div>
+
+    <script>
+        // Mobile Menu Toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const navMenu = document.querySelector('nav ul');
         const header = document.querySelector('header');
-        if (window.scrollY > 50) {
-            header.classList.add('scrolled');
-        } else {
-            header.classList.remove('scrolled');
-        }
-    });
 
-    // Smooth scroll for the scroll-down button
-    document.querySelector('.scroll-down').addEventListener('click', function() {
-        const aboutSection = document.querySelector('.about-section');
-        aboutSection.scrollIntoView({ behavior: 'smooth' });
-    });
+        menuToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            menuToggle.classList.toggle('active');
+        });
 
-    // Reveal animations on scroll
-    function reveal() {
-        const reveals = document.querySelectorAll('.reveal');
-        
-        reveals.forEach(element => {
-            const windowHeight = window.innerHeight;
-            const elementTop = element.getBoundingClientRect().top;
-            const elementVisible = 150;
-            
-            if (elementTop < windowHeight - elementVisible) {
-                element.classList.add('active');
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!navMenu.contains(e.target) && !menuToggle.contains(e.target)) {
+                navMenu.classList.remove('active');
+                menuToggle.classList.remove('active');
             }
         });
-    }
 
-    window.addEventListener('scroll', reveal);
-    window.addEventListener('load', reveal);
- </script>
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Gallery Images
+        const galleryImages = [
+            'https://images.unsplash.com/photo-1442512595331-e89e73853f31?ixlib=rb-4.0.3',
+            'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?ixlib=rb-4.0.3',
+            'https://images.unsplash.com/photo-1509042239860-f550ce710b93?ixlib=rb-4.0.3',
+            'https://images.unsplash.com/photo-1554118811-1e0d58224f24?ixlib=rb-4.0.3',
+            'https://images.unsplash.com/photo-1559925393-8be0ec4767c8?ixlib=rb-4.0.3',
+            'https://images.unsplash.com/photo-1481833761820-0509d3217039?ixlib=rb-4.0.3'
+        ];
+
+        // Testimonials Data
+        const testimonials = [
+            {
+                content: "The best coffee I've ever had! The atmosphere is perfect for both work and relaxation.",
+                name: "Sarah Johnson",
+                role: "Regular Customer",
+                image: "https://randomuser.me/api/portraits/women/1.jpg"
+            },
+            {
+                content: "Amazing food and exceptional service. This is my go-to place for business meetings.",
+                name: "Michael Chen",
+                role: "Business Professional",
+                image: "https://randomuser.me/api/portraits/men/2.jpg"
+            },
+            {
+                content: "Love the cozy ambiance and friendly staff. Their pastries are simply delicious!",
+                name: "Emma Wilson",
+                role: "Food Blogger",
+                image: "https://randomuser.me/api/portraits/women/3.jpg"
+            }
+        ];
+
+        // Populate Gallery
+        const galleryGrid = document.querySelector('.gallery-grid');
+        galleryImages.forEach(image => {
+            galleryGrid.innerHTML += `
+                <div class="gallery-item reveal">
+                    <img src="${image}" alt="Gallery Image">
+                    <div class="gallery-overlay">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+            `;
+        });
+
+        // Populate Testimonials
+        const testimonialsGrid = document.querySelector('.testimonials-grid');
+        testimonials.forEach(testimonial => {
+            testimonialsGrid.innerHTML += `
+                <div class="testimonial-card reveal">
+                    <div class="testimonial-content">
+                        ${testimonial.content}
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-image">
+                            <img src="${testimonial.image}" alt="${testimonial.name}">
+                        </div>
+                        <div class="author-info">
+                            <h4>${testimonial.name}</h4>
+                            <p>${testimonial.role}</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        });
+
+        // Lightbox functionality
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = lightbox.querySelector('img');
+        const lightboxClose = lightbox.querySelector('.lightbox-close');
+
+        document.querySelectorAll('.gallery-item').forEach(item => {
+            item.addEventListener('click', () => {
+                const imgSrc = item.querySelector('img').src;
+                lightboxImg.src = imgSrc;
+                lightbox.classList.add('active');
+            });
+        });
+
+        lightboxClose.addEventListener('click', () => {
+            lightbox.classList.remove('active');
+        });
+
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) {
+                lightbox.classList.remove('active');
+            }
+        });
+
+        // Scroll Reveal Animation
+        function reveal() {
+            const reveals = document.querySelectorAll('.reveal');
+            reveals.forEach(element => {
+                const windowHeight = window.innerHeight;
+                const elementTop = element.getBoundingClientRect().top;
+                const elementVisible = 150;
+
+                if (elementTop < windowHeight - elementVisible) {
+                    element.classList.add('active');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', reveal);
+        window.addEventListener('load', reveal);
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
 </body>
 </html>
