@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gcafe - Reservation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            line-height: 1.6;
+            background-color: #f9f9f9;
+        }
+
+        /* Header Styles */
+        header {
+            background: #1a1a1a;
+            padding: 1.2rem 5%;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            color: #fff;
+            font-size: 2rem;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        nav ul {
+            display: flex;
+            gap: 3rem;
+            list-style: none;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.1rem;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #e67e22;
+        }
+
+        /* Hero Section */
+        .reservation-hero {
+            height: 50vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+                        url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            margin-top: 76px;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            padding: 0 20px;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            animation: fadeInDown 1s ease;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s ease 0.3s;
+        }
+
+        /* Reservation Form Section */
+        .reservation-section {
+            max-width: 1000px;
+            margin: -100px auto 50px;
+            padding: 0 20px;
+            position: relative;
+            z-index: 1;
+        }
+        /* Seating Preference Styles */
+        .note-box {
+            background: #fff5e6;
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid #e67e22;
+            display: flex;
+            align-items: start;
+            gap: 1rem;
+        }
+
+        .note-box i {
+            color: #e67e22;
+            font-size: 1.2rem;
+            margin-top: 0.2rem;
+        }
+
+        .note-box p {
+            color: #666;
+            font-size: 0.9rem;
+            margin: 0;
+        }
+        .reservation-form {
+            background: white;
+            padding: 3rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            animation: fadeInUp 1s ease 0.5s;
+            opacity: 0;
+            animation-fill-mode: forwards;
+        }
+
+        .form-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .form-header h2 {
+            color: #333;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .form-header p {
+            color: #666;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #e67e22;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .submit-btn {
+            background: #e67e22;
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background 0.3s;
+            width: 100%;
+        }
+
+        .submit-btn:hover {
+            background: #d35400;
+        }
+
+        /* Time Slots */
+        .time-slots {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .time-slot {
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .time-slot:hover {
+            border-color: #e67e22;
+            background: #fff5e6;
+        }
+
+        .time-slot.selected {
+            background: #e67e22;
+            color: white;
+            border-color: #e67e22;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .reservation-form {
+                padding: 2rem;
+            }
+
+            .time-slots {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <a href="newcode.html" class="logo">Gcafe</a>
+        <nav>
+            <ul>
+                <li><a href="newcode.html">Home</a></li>
+                <li><a href="menu.html">Menu</a></li>
+                <li><a href="stores.html">Our Stores</a></li>
+                <li><a href="reservation.html">Reservation</a></li>
+                <li><a href="contact.html">Contact us</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="reservation-hero">
+        <div class="hero-content">
+            <h1>Book Your Table</h1>
+            <p>Reserve your special moment with us</p>
+        </div>
+    </section>
+
+    <!-- Reservation Form Section -->
+    <section class="reservation-section">
+        <form class="reservation-form" id="reservationForm">
+            <div class="form-header">
+                <h2>Make a Reservation</h2>
+                <p>Please fill in the form below to book your table</p>
+            </div>
+
+            <div class="form-grid">
+                <!-- Personal Information -->
+                <div class="form-group">
+                    <label for="name">Full Name *</label>
+                    <input type="text" id="name" class="form-control" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email Address *</label>
+                    <input type="email" id="email" class="form-control" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Phone Number *</label>
+                    <input type="tel" id="phone" class="form-control" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="guests">Number of Guests *</label>
+                    <select id="guests" class="form-control" required>
+                        <option value="">Select number of guests</option>
+                        <option value="1">1 Person</option>
+                        <option value="2">2 People</option>
+                        <option value="3">3 People</option>
+                        <option value="4">4 People</option>
+                        <option value="5">5 People</option>
+                        <option value="6">6 People</option>
+                        <option value="7+">7+ People</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="date">Date *</label>
+                    <input type="date" id="date" class="form-control" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="location">Select Location *</label>
+                    <select id="location" class="form-control" required>
+                        <option value="">Select a location</option>
+                        <option value="mgroad">MG Road</option>
+                        <option value="indiranagar">Indiranagar</option>
+                        <option value="whitefield">Whitefield</option>
+                        <option value="koramangala">Koramangala</option>
+                    </select>
+                </div>
+                <!-- Add this after the location select -->
+                <div class="form-group">
+                    <label for="seating">Seating Preference *</label>
+                    <select id="seating" class="form-control" required>
+                        <option value="">Select seating preference</option>
+                        <option value="indoor">Indoor Seating</option>
+                        <option value="outdoor">Outdoor Seating</option>
+                    </select>
+                </div>
+
+                <!-- Add this after the seating select -->
+                <div class="form-group" id="outdoorNote" style="display: none;">
+                    <label>Note</label>
+                    <div class="note-box">
+                        <i class="fas fa-umbrella-beach"></i>
+                        <p>Outdoor seating is subject to weather conditions. We'll contact you if any changes are needed.</p>
+                    </div>
+                </div>
+                <!-- Time Slots -->
+                <div class="form-group full-width">
+                    <label>Select Time *</label>
+                    <div class="time-slots">
+                        <div class="time-slot" data-time="11:00">11:00 AM</div>
+                        <div class="time-slot" data-time="12:00">12:00 PM</div>
+                        <div class="time-slot" data-time="13:00">1:00 PM</div>
+                        <div class="time-slot" data-time="14:00">2:00 PM</div>
+                        <div class="time-slot" data-time="15:00">3:00 PM</div>
+                        <div class="time-slot" data-time="16:00">4:00 PM</div>
+                        <div class="time-slot" data-time="17:00">5:00 PM</div>
+                        <div class="time-slot" data-time="18:00">6:00 PM</div>
+                        <div class="time-slot" data-time="19:00">7:00 PM</div>
+                        <div class="time-slot" data-time="20:00">8:00 PM</div>
+                        <div class="time-slot" data-time="21:00">9:00 PM</div>
+                        <div class="time-slot" data-time="22:00">10:00 PM</div>
+                    </div>
+                </div>
+
+                <div class="form-group full-width">
+                    <label for="special-requests">Special Requests (Optional)</label>
+                    <textarea id="special-requests" class="form-control" rows="4" 
+                        placeholder="Any special requests or preferences?"></textarea>
+                </div>
+
+                <div class="form-group full-width">
+                    <button type="submit" class="submit-btn">
+                        <i class="fas fa-calendar-check"></i> Confirm Reservation
+                    </button>
+                </div>
+            </div>
+        </form>
+    </section>
+
+    <!-- Success Modal -->
+    <div class="success-modal" id="successModal">
+        <div class="modal-content">
+            <i class="fas fa-check-circle"></i>
+            <h3>Reservation Confirmed!</h3>
+            <p>Your table has been successfully reserved.</p>
+            <p class="reservation-details"></p>
+            <button class="modal-btn" onclick="closeModal()">OK</button>
+        </div>
+    </div>
+
+    <!-- Additional styles for modal -->
+    <style>
+        .success-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1001;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            animation: scaleIn 0.3s ease;
+        }
+
+        .modal-content i {
+            color: #4CAF50;
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .modal-content h3 {
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        .modal-content p {
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .modal-btn {
+            background: #e67e22;
+            color: white;
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .modal-btn:hover {
+            background: #d35400;
+        }
+
+        @keyframes scaleIn {
+            from {
+                transform: scale(0.9);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+    </style>
+    <script>
+        // Get form elements
+        const form = document.getElementById('reservationForm');
+        const timeSlots = document.querySelectorAll('.time-slot');
+        const dateInput = document.getElementById('date');
+        const successModal = document.getElementById('successModal');
+
+        // Set minimum date to today
+        const today = new Date();
+        const tomorrow = new Date(today);
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        dateInput.min = tomorrow.toISOString().split('T')[0];
+
+        // Set maximum date to 30 days from today
+        const maxDate = new Date(today);
+        maxDate.setDate(maxDate.getDate() + 30);
+        dateInput.max = maxDate.toISOString().split('T')[0];
+
+        // Time slot selection
+        let selectedTime = null;
+        timeSlots.forEach(slot => {
+            slot.addEventListener('click', () => {
+                // Remove selected class from all slots
+                timeSlots.forEach(s => s.classList.remove('selected'));
+                // Add selected class to clicked slot
+                slot.classList.add('selected');
+                selectedTime = slot.dataset.time;
+            });
+        });
+
+        // Phone number validation
+        const phoneInput = document.getElementById('phone');
+        phoneInput.addEventListener('input', (e) => {
+            // Remove any non-numeric characters
+            let value = e.target.value.replace(/\D/g, '');
+            
+            // Format the number
+            if (value.length > 0) {
+                if (value.length <= 10) {
+                    // Format as: +91 XXXXX XXXXX
+                    value = '+91 ' + value.substring(0, 5) + (value.length > 5 ? ' ' + value.substring(5) : '');
+                } else {
+                    // Limit to 10 digits
+                    value = '+91 ' + value.substring(0, 5) + ' ' + value.substring(5, 10);
+                }
+            }
+            
+            e.target.value = value;
+        });
+
+        // Form submission
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            // Validate time slot selection
+            if (!selectedTime) {
+                alert('Please select a time slot');
+                return;
+            }
+
+            // Get form values
+            const formData = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                guests: document.getElementById('guests').value,
+                date: document.getElementById('date').value,
+                time: selectedTime,
+                location: document.getElementById('location').value,
+                requests: document.getElementById('special-requests').value
+            };
+
+            // Show success modal with reservation details
+            const modalDetails = successModal.querySelector('.reservation-details');
+            modalDetails.innerHTML = `
+                <strong>Name:</strong> ${formData.name}<br>
+                <strong>Date:</strong> ${formatDate(formData.date)}<br>
+                <strong>Time:</strong> ${formatTime(formData.time)}<br>
+                <strong>Location:</strong> ${formatLocation(formData.location)}<br>
+                <strong>Guests:</strong> ${formData.guests}
+            `;
+
+            successModal.style.display = 'flex';
+
+            // Reset form
+            form.reset();
+            timeSlots.forEach(slot => slot.classList.remove('selected'));
+            selectedTime = null;
+        });
+
+        // Format date
+        function formatDate(dateString) {
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            return new Date(dateString).toLocaleDateString('en-US', options);
+        }
+
+        // Format time
+        function formatTime(time) {
+            const [hours, minutes] = time.split(':');
+            const period = hours >= 12 ? 'PM' : 'AM';
+            const formattedHours = hours % 12 || 12;
+            return `${formattedHours}:${minutes} ${period}`;
+        }
+
+        // Format location
+        function formatLocation(location) {
+            const locations = {
+                'mgroad': 'MG Road',
+                'indiranagar': 'Indiranagar',
+                'whitefield': 'Whitefield',
+                'koramangala': 'Koramangala'
+            };
+            return locations[location] || location;
+        }
+
+        // Close modal
+        function closeModal() {
+            successModal.style.display = 'none';
+        }
+
+        // Close modal when clicking outside
+        successModal.addEventListener('click', (e) => {
+            if (e.target === successModal) {
+                closeModal();
+            }
+        });
+
+        // Add animation when scrolling to form
+        function revealForm() {
+            const form = document.querySelector('.reservation-form');
+            const formTop = form.getBoundingClientRect().top;
+            const windowHeight = window.innerHeight;
+
+            if (formTop < windowHeight - 100) {
+                form.style.opacity = '1';
+                form.style.transform = 'translateY(0)';
+            }
+        }
+
+        // Check form visibility on scroll and load
+        window.addEventListener('scroll', revealForm);
+        window.addEventListener('load', revealForm);
+
+        // Disable past dates in date picker
+        dateInput.addEventListener('input', (e) => {
+            const selectedDate = new Date(e.target.value);
+            if (selectedDate < tomorrow) {
+                alert('Please select a future date');
+                e.target.value = '';
+            }
+        });
+        // Seating preference handling
+        const seatingSelect = document.getElementById('seating');
+        const outdoorNote = document.getElementById('outdoorNote');
+
+        seatingSelect.addEventListener('change', (e) => {
+            if (e.target.value === 'outdoor') {
+                outdoorNote.style.display = 'block';
+                outdoorNote.style.animation = 'fadeInUp 0.3s ease forwards';
+            } else {
+                outdoorNote.style.display = 'none';
+            }
+        });
+
+        // Update form submission to include seating preference
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            // Validate time slot selection
+            if (!selectedTime) {
+                alert('Please select a time slot');
+                return;
+            }
+
+            // Get form values
+            const formData = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                guests: document.getElementById('guests').value,
+                date: document.getElementById('date').value,
+                time: selectedTime,
+                location: document.getElementById('location').value,
+                seating: document.getElementById('seating').value, // Add this line
+                requests: document.getElementById('special-requests').value
+            };
+
+            // Update modal details to include seating preference
+            const modalDetails = successModal.querySelector('.reservation-details');
+            modalDetails.innerHTML = `
+                <strong>Name:</strong> ${formData.name}<br>
+                <strong>Date:</strong> ${formatDate(formData.date)}<br>
+                <strong>Time:</strong> ${formatTime(formData.time)}<br>
+                <strong>Location:</strong> ${formatLocation(formData.location)}<br>
+                <strong>Seating:</strong> ${formData.seating.charAt(0).toUpperCase() + formData.seating.slice(1)}<br>
+                <strong>Guests:</strong> ${formData.guests}
+            `;
+
+            successModal.style.display = 'flex';
+
+            // Reset form
+            form.reset();
+            timeSlots.forEach(slot => slot.classList.remove('selected'));
+            selectedTime = null;
+            outdoorNote.style.display = 'none';
+        });
+
+        // Add hover effect for time slots
+        timeSlots.forEach(slot => {
+            slot.addEventListener('mouseover', () => {
+                if (!slot.classList.contains('selected')) {
+                    slot.style.transform = 'scale(1.05)';
+                }
+            });
+
+            slot.addEventListener('mouseout', () => {
+                if (!slot.classList.contains('selected')) {
+                    slot.style.transform = 'scale(1)';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

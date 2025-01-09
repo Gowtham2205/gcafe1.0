@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gcafe - Menu</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            line-height: 1.6;
+            background: #f9f9f9;
+        }
+
+        /* Header Styles */
+        header {
+            background: #1a1a1a;
+            padding: 1.2rem 5%;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            color: #fff;
+            font-size: 2rem;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        nav ul {
+            display: flex;
+            gap: 3rem;
+            list-style: none;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.1rem;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #e67e22;
+        }
+
+        /* Cart Icon */
+        .cart-icon {
+            position: relative;
+            cursor: pointer;
+            margin-left: 2rem;
+        }
+
+        .cart-icon i {
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #e67e22;
+            color: white;
+            font-size: 0.8rem;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Hero Section */
+        .menu-hero {
+            height: 50vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+                        url('https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?ixlib=rb-4.0.3');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            margin-top: 76px;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+        }
+
+        /* Menu Categories */
+        .menu-categories {
+            background: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 76px;
+            z-index: 100;
+        }
+
+        .category-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+        }
+
+        .category-btn {
+            padding: 0.8rem 2rem;
+            border: none;
+            background: none;
+            color: #333;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .category-btn::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 2px;
+            background: #e67e22;
+            transition: width 0.3s;
+        }
+
+        .category-btn.active {
+            color: #e67e22;
+        }
+
+        .category-btn.active::after {
+            width: 80%;
+        }
+
+        /* Menu Items Grid */
+        .menu-section {
+            max-width: 1200px;
+            margin: 3rem auto;
+            padding: 0 20px;
+            display: none;
+        }
+
+        .menu-section.active {
+            display: block;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s;
+        }
+
+        .menu-section.active .menu-grid {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .menu-item {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .menu-item:hover {
+            transform: translateY(-10px);
+        }
+
+        .menu-image {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .menu-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+
+        .menu-item:hover .menu-image img {
+            transform: scale(1.1);
+        }
+
+        .menu-content {
+            padding: 1.5rem;
+        }
+
+        .menu-content h3 {
+            font-size: 1.3rem;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .menu-content p {
+            color: #666;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            min-height: 40px;
+        }
+
+        .menu-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .menu-price {
+            color: #e67e22;
+            font-weight: 600;
+            font-size: 1.2rem;
+        }
+        /* Animation for menu items */
+        .menu-item {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .menu-item.show {
+            animation: fadeInUp 0.5s ease forwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Delay for each item */
+        .menu-item:nth-child(1) { animation-delay: 0.1s; }
+        .menu-item:nth-child(2) { animation-delay: 0.3s; }
+        .menu-item:nth-child(3) { animation-delay: 0.5s; }
+        .menu-item:nth-child(4) { animation-delay: 0.7s; }
+
+        .add-to-cart {
+            background: #e67e22;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .add-to-cart:hover {
+            background: #d35400;
+            transform: scale(1.05);
+        }
+        /* Cart Modal Styles */
+        .cart-modal {
+            position: fixed;
+            top: 0;
+            right: -400px;
+            width: 400px;
+            height: 100vh;
+            background: white;
+            box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+            transition: right 0.3s ease-in-out;
+            z-index: 1001;
+        }
+
+        .cart-modal.active {
+            right: 0;
+        }
+
+        .cart-header {
+            padding: 1.5rem;
+            background: #1a1a1a;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .cart-header h2 {
+            font-size: 1.5rem;
+        }
+
+        .close-cart {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .cart-items {
+            padding: 1.5rem;
+            max-height: calc(100vh - 200px);
+            overflow-y: auto;
+        }
+
+        .cart-item {
+            display: flex;
+            gap: 1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .cart-item img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .cart-item-details {
+            flex-grow: 1;
+        }
+
+        .cart-item-title {
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .cart-item-price {
+            color: #e67e22;
+            font-weight: 600;
+        }
+
+        .cart-item-quantity {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .quantity-btn {
+            background: #f0f0f0;
+            border: none;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .quantity-btn:hover {
+            background: #e0e0e0;
+        }
+
+        .cart-footer {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 1.5rem;
+            background: white;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+        }
+
+        .cart-total {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .checkout-btn {
+            width: 100%;
+            padding: 1rem;
+            background: #e67e22;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .checkout-btn:hover {
+            background: #d35400;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+            z-index: 1000;
+        }
+
+        .overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        @media (max-width: 768px) {
+            .cart-modal {
+                width: 100%;
+                right: -100%;
+            }
+
+            .category-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .menu-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <a href="newcode.html" class="logo">Gcafe</a>
+        <nav>
+            <ul>
+                <li><a href="newcode.html">Home</a></li>
+                <li><a href="menu.html">Menu</a></li>
+                <li><a href="stores.html">Our Stores</a></li>
+                <li><a href="reservation.html">Reservation</a></li>
+                <li><a href="contact.html">Contact us</a></li>
+            </ul>
+        </nav>
+        <div class="cart-icon">
+            <i class="fas fa-shopping-cart"></i>
+            <span class="cart-count">0</span>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="menu-hero">
+        <div class="hero-content">
+            <h1>Our Menu</h1>
+            <p>Discover our carefully curated selection of coffee and delicacies</p>
+        </div>
+    </section>
+
+    <!-- Menu Categories -->
+    <div class="menu-categories">
+        <div class="category-container">
+            <button class="category-btn active" data-category="hot-coffee">Hot Coffee</button>
+            <button class="category-btn" data-category="cold-coffee">Cold Coffee</button>
+            <button class="category-btn" data-category="pastries">Pastries</button>
+        </div>
+    </div>
+
+    <!-- Cart Modal -->
+    <div class="cart-modal">
+        <div class="cart-header">
+            <h2>Your Cart</h2>
+            <button class="close-cart">×</button>
+        </div>
+        <div class="cart-items">
+            <!-- Cart items will be dynamically added here -->
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Total:</span>
+                <span class="total-amount">₹0</span>
+            </div>
+            <button class="checkout-btn">Proceed to Checkout</button>
+        </div>
+    </div>
+
+    <div class="overlay"></div>
+    <!-- Menu Sections -->
+    <section id="hot-coffee" class="menu-section active">
+        <div class="menu-grid">
+            <div class="menu-item" data-id="h1">
+                <div class="menu-image">
+                    <img src="https://images.unsplash.com/photo-1541167760496-1628856ab772" alt="Espresso">
+                </div>
+                <div class="menu-content">
+                    <h3>Classic Espresso</h3>
+                    <p>Rich and intense single shot of pure coffee</p>
+                    <div class="menu-footer">
+                        <span class="menu-price">₹120</span>
+                        <button class="add-to-cart">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-item" data-id="h2">
+                <div class="menu-image">
+                    <img src="https://images.unsplash.com/photo-1572442388796-11668a67e53d" alt="Cappuccino">
+                </div>
+                <div class="menu-content">
+                    <h3>Cappuccino</h3>
+                    <p>Espresso with steamed milk foam</p>
+                    <div class="menu-footer">
+                        <span class="menu-price">₹150</span>
+                        <button class="add-to-cart">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-item" data-id="h3">
+                <div class="menu-image">
+                    <img src="https://images.unsplash.com/photo-1610889556528-9a770e32642f" alt="Latte">
+                </div>
+                <div class="menu-content">
+                    <h3>Caramel Latte</h3>
+                    <p>Espresso with caramel and steamed milk</p>
+                    <div class="menu-footer">
+                        <span class="menu-price">₹180</span>
+                        <button class="add-to-cart">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-item" data-id="h4">
+                <div class="menu-image">
+                    <img src="https://images.unsplash.com/photo-1585494156145-1c60a4fe952b" alt="Mocha">
+                </div>
+                <div class="menu-content">
+                    <h3>Hot Mocha</h3>
+                    <p>Espresso with chocolate and steamed milk</p>
+                    <div class="menu-footer">
+                        <span class="menu-price">₹190</span>
+                        <button class="add-to-cart">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+       <!-- Cold Coffee Section -->
+    <section id="cold-coffee" class="menu-section">
+        <div class="menu-grid">
+            <div class="menu-item" data-id="c1">
+                <div class="menu-image">
+                    <img src="https://images.unsplash.com/photo-1517701604599-bb29b565090c" alt="Iced Americano">
+                </div>
+                <div class="menu-content">
+                    <h3>Iced Americano</h3>
+                    <p>Chilled espresso with cold water</p>
+                    <div class="menu-footer">
+                        <span class="menu-price">₹140</span>
+                        <button class="add-to-cart">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-item" data-id="c2">
+                <div class="menu-image">
+                    <img src="https://images.unsplash.com/photo-1461023058943-07fcbe16d735" alt="Frappuccino">
+                </div>
+                <div class="menu-content">
+                    <h3>Chocolate Frappuccino</h3>
+                    <p>Blended coffee with chocolate and cream</p>
+                    <div class="menu-footer">
+                        <span class="menu-price">₹220</span>
+                        <button class="add-to-cart">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-item" data-id="c3">
+                <div class="menu-image">
+                    <img src="https://images.unsplash.com/photo-1499961024600-ad094db305cc" alt="Cold Brew">
+                </div>
+                <div class="menu-content">
+                    <h3>Cold Brew</h3>
+                    <p>Slow-steeped coffee served over ice</p>
+                    <div class="menu-footer">
+                        <span class="menu-price">₹160</span>
+                        <button class="add-to-cart">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-item" data-id="c4">
+                <div class="menu-image">
+                    <img src="https://images.unsplash.com/photo-1592663527359-cf6642f54cff" alt="Iced Latte">
+                </div>
+                <div class="menu-content">
+                    <h3>Iced Caramel Latte</h3>
+                    <p>Chilled espresso with caramel and milk</p>
+                    <div class="menu-footer">
+                        <span class="menu-price">₹200</span>
+                        <button class="add-to-cart">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pastries Section -->
+    <section id="pastries" class="menu-section">
+        <div class="menu-grid">
+            <div class="menu-item" data-id="p1">
+                <div class="menu-image">
+                    <img src="https://images.unsplash.com/photo-1530610476181-d83430b64dcd" alt="Chocolate Croissant">
+                </div>
+                <div class="menu-content">
+                    <h3>Chocolate Croissant</h3>
+                    <p>Flaky pastry filled with rich chocolate</p>
+                    <div class="menu-footer">
+                        <span class="menu-price">₹90</span>
+                        <button class="add-to-cart">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-item" data-id="p2">
+                <div class="menu-image">
+                    <img src="https://images.unsplash.com/photo-1587668178277-295251f900ce" alt="Apple Danish">
+                </div>
+                <div class="menu-content">
+                    <h3>Apple Danish</h3>
+                    <p>Sweet pastry with caramelized apples</p>
+                    <div class="menu-footer">
+                        <span class="menu-price">₹110</span>
+                        <button class="add-to-cart">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-item" data-id="p3">
+                <div class="menu-image">
+                    <img src="https://images.unsplash.com/photo-1605807646983-377bc5a76493" alt="Almond Croissant">
+                </div>
+                <div class="menu-content">
+                    <h3>Almond Croissant</h3>
+                    <p>Buttery croissant with almond filling</p>
+                    <div class="menu-footer">
+                        <span class="menu-price">₹150</span>
+                        <button class="add-to-cart">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-item" data-id="p4">
+                <div class="menu-image">
+                    <img src="https://images.unsplash.com/photo-1509365465985-25d11c17e812" alt="Cinnamon Roll">
+                </div>
+                <div class="menu-content">
+                    <h3>Cinnamon Roll</h3>
+                    <p>Classic pastry with cinnamon filling</p>
+                    <div class="menu-footer">
+                        <span class="menu-price">₹130</span>
+                        <button class="add-to-cart">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+<script>
+    // Category switching with animations
+    const categoryBtns = document.querySelectorAll('.category-btn');
+    const menuSections = document.querySelectorAll('.menu-section');
+
+    categoryBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            // Remove active class from all buttons and sections
+            categoryBtns.forEach(b => b.classList.remove('active'));
+            menuSections.forEach(s => {
+                s.classList.remove('active');
+                // Reset animations for items
+                s.querySelectorAll('.menu-item').forEach(item => {
+                    item.classList.remove('show');
+                });
+            });
+
+            // Add active class to clicked button and corresponding section
+            btn.classList.add('active');
+            const category = btn.dataset.category;
+            const activeSection = document.getElementById(category);
+            activeSection.classList.add('active');
+
+            // Trigger animations for items in the active section
+            const items = activeSection.querySelectorAll('.menu-item');
+            items.forEach((item, index) => {
+                setTimeout(() => {
+                    item.classList.add('show');
+                }, 100 * index);
+            });
+        });
+    });
+
+    // Trigger animation for initial active section
+    window.addEventListener('load', () => {
+        const activeSection = document.querySelector('.menu-section.active');
+        if (activeSection) {
+            const items = activeSection.querySelectorAll('.menu-item');
+            items.forEach((item, index) => {
+                setTimeout(() => {
+                    item.classList.add('show');
+                }, 100 * index);
+            });
+        }
+    });
+
+    // Keep all the cart functionality below this line
+    let cart = [];
+    const cartIcon = document.querySelector('.cart-icon');
+    const cartModal = document.querySelector('.cart-modal');
+    const overlay = document.querySelector('.overlay');
+    const closeCart = document.querySelector('.close-cart');
+    const cartItems = document.querySelector('.cart-items');
+    const cartCount = document.querySelector('.cart-count');
+    const totalAmount = document.querySelector('.total-amount');
+
+    // Open/Close cart
+    cartIcon.addEventListener('click', () => {
+        cartModal.classList.add('active');
+        overlay.classList.add('active');
+    });
+
+    closeCart.addEventListener('click', () => {
+        cartModal.classList.remove('active');
+        overlay.classList.remove('active');
+    });
+
+    overlay.addEventListener('click', () => {
+        cartModal.classList.remove('active');
+        overlay.classList.remove('active');
+    });
+
+    // Add to cart
+    document.querySelectorAll('.add-to-cart').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const menuItem = btn.closest('.menu-item');
+            const itemId = menuItem.dataset.id;
+            const itemName = menuItem.querySelector('h3').textContent;
+            const itemPrice = parseInt(menuItem.querySelector('.menu-price').textContent.replace('₹', ''));
+            const itemImage = menuItem.querySelector('img').src;
+
+            addToCart(itemId, itemName, itemPrice, itemImage);
+        });
+    });
+
+    function addToCart(id, name, price, image) {
+        const existingItem = cart.find(item => item.id === id);
+
+        if (existingItem) {
+            existingItem.quantity++;
+        } else {
+            cart.push({
+                id: id,
+                name: name,
+                price: price,
+                image: image,
+                quantity: 1
+            });
+        }
+
+        updateCart();
+    }
+
+    function updateCart() {
+        // Update cart count
+        cartCount.textContent = cart.reduce((total, item) => total + item.quantity, 0);
+
+        // Update cart items
+        cartItems.innerHTML = cart.map(item => `
+            <div class="cart-item">
+                <img src="${item.image}" alt="${item.name}">
+                <div class="cart-item-details">
+                    <h3 class="cart-item-title">${item.name}</h3>
+                    <span class="cart-item-price">₹${item.price}</span>
+                    <div class="cart-item-quantity">
+                        <button class="quantity-btn" onclick="updateQuantity('${item.id}', -1)">-</button>
+                        <span>${item.quantity}</span>
+                        <button class="quantity-btn" onclick="updateQuantity('${item.id}', 1)">+</button>
+                    </div>
+                </div>
+            </div>
+        `).join('');
+
+        // Update total
+        const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+        totalAmount.textContent = `₹${total}`;
+    }
+
+    function updateQuantity(id, change) {
+        const item = cart.find(item => item.id === id);
+        if (item) {
+            item.quantity += change;
+            if (item.quantity <= 0) {
+                cart = cart.filter(item => item.id !== id);
+            }
+            updateCart();
+        }
+    }
+</script>
+
+</body>
+</html>
